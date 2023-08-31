@@ -9,7 +9,16 @@ import (
 func ExampleNewClient() {
 	kakaoRESTAPIKey := os.Getenv("KAKAO_REST_API_KEY")
 
-	cli := NewClient(core.NewClient(core.WithRestAPIKey(kakaoRESTAPIKey)))
+	if err := core.InitializeSDK(kakaoRESTAPIKey); err != nil {
+		fmt.Println("err:", err)
+		return
+	}
+
+	cli, err := NewClient()
+	if err != nil {
+		fmt.Println("err:", err)
+		return
+	}
 
 	resp, err := cli.SearchByKeyword("카페", CategoryGroupCode.Cafe, 127.110306812433, 37.394245407468, 10000)
 	if err != nil {

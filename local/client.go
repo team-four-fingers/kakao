@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/go-resty/resty/v2"
 	"github.com/team-four-fingers/kakao/core"
 	"github.com/team-four-fingers/kakao/local/keyword"
 	"strconv"
@@ -28,11 +29,17 @@ type Client interface {
 }
 
 type defaultClient struct {
-	*core.Client
+	*resty.Client
 }
 
-func NewClient(client *core.Client) Client {
-	return &defaultClient{Client: client}
+func NewClient() (Client, error) {
+	restyCli := resty.New()
+
+	if err := core.ConfigureClient(restyCli); err != nil {
+		return nil, err
+	}
+
+	return &defaultClient{Client: restyCli}, nil
 }
 
 const (
