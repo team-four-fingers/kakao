@@ -42,10 +42,6 @@ func NewClient() (Client, error) {
 	return &defaultClient{Client: restyCli}, nil
 }
 
-func NewClient(client *core.Client) Client {
-	return &defaultClient{Client: client}
-}
-
 const (
 	queryKey             = "query"
 	categoryGroupCodeKey = "category_group_code"
