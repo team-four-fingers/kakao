@@ -1,36 +1,35 @@
 package core
 
-import "github.com/go-resty/resty/v2"
-
-type Client struct {
-	*resty.Client
-}
+import (
+	"errors"
+	"github.com/go-resty/resty/v2"
+)
 
 type ClientOptions struct {
-	restAPIKey string
+	baseURL string
 }
 
 type ClientOption func(*ClientOptions)
 
-func WithRestAPIKey(restAPIKey string) ClientOption {
+func WithBaseURL(baseURL string) ClientOption {
 	return func(o *ClientOptions) {
-		o.restAPIKey = restAPIKey
+		o.baseURL = baseURL
 	}
 }
 
-func NewClient(options ...ClientOption) *Client {
+func ConfigureClient(restyCli *resty.Client, options ...ClientOption) error {
 	o := &ClientOptions{}
 	for _, option := range options {
 		option(o)
 	}
 
-	restyCli := resty.New()
+	if globalOptions.restAPIKey == "" {
+		return errors.New("REST API key is not set")
+	}
 
 	restyCli.SetAuthScheme(kakaoAuthScheme)
-	restyCli.SetAuthToken(o.restAPIKey)
+	restyCli.SetAuthToken(globalOptions.restAPIKey)
 	restyCli.SetBaseURL(defaultKakaoApiHost)
 
-	return &Client{
-		restyCli,
-	}
+	return nil
 }
