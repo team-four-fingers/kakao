@@ -46,7 +46,7 @@ var CarFuel = struct {
 // 303	다중 목적지: 목적지 최대 개수 초과로 인해 경로 탐색 실패
 // 304	다중 목적지: 목적지가 설정한 길찾기 반경 범위를 벗어남
 var NavigationResultCode = struct {
-	Success string
+	Success int
 }{
-	Success: "0",
+	Success: 0,
 }

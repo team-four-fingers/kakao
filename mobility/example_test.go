@@ -14,6 +14,18 @@ func ExampleNewClient() {
 	cli := NewClient(core.NewClient(core.WithRestAPIKey("07fba53d6126444d9b0cd6f70e77e894")))
 
 	resp, err := cli.NavigateRouteThroughWaypoints(&waypoints.NavigateRouteThroughWaypointsRequest{
+		//	"origin": {
+		//		"x": 126.946362033068,         "y": 37.5404741779088
+		//	},
+		//	"destination": {
+		//		"x": 127.1101250888609,         "y": 37.39407843730005
+		//	},
+		//	"waypoints": [
+		//{
+		//	"coordinate": {
+		//	"x": 126.92716700037366,         "y": 37.5266641708316
+		//},
+
 		Origin: common.Location{
 			X: 126.946362033068,
 			Y: 37.5404741779088,

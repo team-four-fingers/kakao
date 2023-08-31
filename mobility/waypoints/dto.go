@@ -22,7 +22,7 @@ type NavigateRouteThroughWaypointsResponse struct {
 }
 
 type Route struct {
-	ResultCode string    `json:"result_code"`
+	ResultCode int       `json:"result_code"`
 	ResultMsg  string    `json:"result_msg"`
 	Summary    Summary   `json:"summary"`
 	Sections   []Section `json:"sections"`
