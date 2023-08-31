@@ -12,6 +12,12 @@ type ClientOptions struct {
 
 type ClientOption func(*ClientOptions)
 
+func WithRestAPIKey(restAPIKey string) ClientOption {
+	return func(o *ClientOptions) {
+		o.restAPIKey = restAPIKey
+	}
+}
+
 func NewClient(options ...ClientOption) *Client {
 	o := &ClientOptions{}
 	for _, option := range options {
