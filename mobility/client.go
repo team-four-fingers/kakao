@@ -3,6 +3,7 @@ package mobility
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/go-resty/resty/v2"
 	"github.com/samber/lo"
 	"github.com/team-four-fingers/kakao/core"
 	"github.com/team-four-fingers/kakao/mobility/common"
@@ -21,13 +22,17 @@ type Client interface {
 }
 
 type defaultClient struct {
-	*core.Client
+	*resty.Client
 }
 
-func NewClient(client *core.Client) Client {
-	client.SetBaseURL(baseURL)
+func NewClient() (Client, error) {
+	restyCli := resty.New()
 
-	return &defaultClient{Client: client}
+	if err := core.ConfigureClient(restyCli, core.WithBaseURL(baseURL)); err != nil {
+		return nil, err
+	}
+
+	return &defaultClient{Client: restyCli}, nil
 }
 
 func (d *defaultClient) NavigateRouteThroughWaypoints(

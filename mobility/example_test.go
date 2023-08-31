@@ -12,7 +12,16 @@ import (
 func ExampleNewClient() {
 	kakaoRESTAPIKey := os.Getenv("KAKAO_REST_API_KEY")
 
-	cli := NewClient(core.NewClient(core.WithRestAPIKey(kakaoRESTAPIKey)))
+	if err := core.InitializeSDK(kakaoRESTAPIKey); err != nil {
+		fmt.Println("err:", err)
+		return
+	}
+
+	cli, err := NewClient()
+	if err != nil {
+		fmt.Println("err:", err)
+		return
+	}
 
 	resp, err := cli.NavigateRouteThroughWaypoints(&waypoints.NavigateRouteThroughWaypointsRequest{
 		//	"origin": {
@@ -52,6 +61,6 @@ func ExampleNewClient() {
 		return
 	}
 
-	fmt.Println("response received: ", resp.Routes[0].ResultCode)
+	fmt.Println("response received: ", resp)
 	// Output: response received:  0
 }
