@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	errNoResult = errors.New("no result")
+	ErrNoResult = errors.New("no result")
 )
 
 // QueryParams
@@ -66,7 +66,7 @@ func (d *defaultClient) SearchByKeyword(query, categoryGroupCode string, x, y fl
 	}
 
 	if len(resp.Documents) == 0 {
-		return nil, errNoResult
+		return nil, ErrNoResult
 	}
 
 	return resp, nil
