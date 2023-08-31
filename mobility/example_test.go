@@ -6,12 +6,13 @@ import (
 	"github.com/team-four-fingers/kakao/core"
 	"github.com/team-four-fingers/kakao/mobility/common"
 	"github.com/team-four-fingers/kakao/mobility/waypoints"
+	"os"
 )
 
 func ExampleNewClient() {
-	//kakaoRESTAPIKey := os.Getenv("KAKAO_REST_API_KEY")
+	kakaoRESTAPIKey := os.Getenv("KAKAO_REST_API_KEY")
 
-	cli := NewClient(core.NewClient(core.WithRestAPIKey("07fba53d6126444d9b0cd6f70e77e894")))
+	cli := NewClient(core.NewClient(core.WithRestAPIKey(kakaoRESTAPIKey)))
 
 	resp, err := cli.NavigateRouteThroughWaypoints(&waypoints.NavigateRouteThroughWaypointsRequest{
 		//	"origin": {
