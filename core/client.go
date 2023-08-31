@@ -18,7 +18,9 @@ func WithBaseURL(baseURL string) ClientOption {
 }
 
 func ConfigureClient(restyCli *resty.Client, options ...ClientOption) error {
-	o := &ClientOptions{}
+	o := &ClientOptions{
+		baseURL: defaultKakaoApiHost,
+	}
 	for _, option := range options {
 		option(o)
 	}
@@ -29,7 +31,7 @@ func ConfigureClient(restyCli *resty.Client, options ...ClientOption) error {
 
 	restyCli.SetAuthScheme(kakaoAuthScheme)
 	restyCli.SetAuthToken(globalOptions.restAPIKey)
-	restyCli.SetBaseURL(defaultKakaoApiHost)
+	restyCli.SetBaseURL(o.baseURL)
 
 	return nil
 }
