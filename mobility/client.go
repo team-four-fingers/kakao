@@ -2,7 +2,6 @@ package mobility
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"github.com/samber/lo"
 	"github.com/team-four-fingers/kakao/core"
@@ -53,10 +52,6 @@ func (d *defaultClient) NavigateRouteThroughWaypoints(
 	foundRoutes := lo.Filter(resp.Routes, func(item waypoints.Route, _ int) bool {
 		return item.ResultCode == common.NavigationResultCode.Success
 	})
-
-	if len(foundRoutes) == 0 {
-		return nil, errors.New("no route found")
-	}
 
 	resp.Routes = foundRoutes
 
