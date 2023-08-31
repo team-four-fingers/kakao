@@ -2,10 +2,15 @@ package local
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/team-four-fingers/kakao/core"
 	"github.com/team-four-fingers/kakao/local/keyword"
 	"strconv"
+)
+
+var (
+	errNoResult = errors.New("no result")
 )
 
 // QueryParams
@@ -58,6 +63,10 @@ func (d *defaultClient) SearchByKeyword(query, categoryGroupCode string, x, y fl
 			err = fmt.Errorf("%w ~ error near '%s' (offset %d)", err, problemPart, jsonErr.Offset)
 		}
 		return nil, err
+	}
+
+	if len(resp.Documents) == 0 {
+		return nil, errNoResult
 	}
 
 	return resp, nil
