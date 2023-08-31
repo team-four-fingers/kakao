@@ -31,6 +31,10 @@ type defaultClient struct {
 	*core.Client
 }
 
+func NewClient(client *core.Client) Client {
+	return &defaultClient{Client: client}
+}
+
 const (
 	queryKey             = "query"
 	categoryGroupCodeKey = "category_group_code"
@@ -70,8 +74,4 @@ func (d *defaultClient) SearchByKeyword(query, categoryGroupCode string, x, y fl
 	}
 
 	return resp, nil
-}
-
-func NewClient(client *core.Client) Client {
-	return &defaultClient{Client: client}
 }
